@@ -8,7 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-
+const bodyParser = require('body-parser');
 const compression = require('compression')
 
 const AppError = require('./utils/appError');
@@ -73,7 +73,11 @@ const limiter = rateLimit({
 app.use('/api', limiter)
 
 // Stripe webhook, before body-parser, because stripe needs the body as stream
-app.post('/webhook-checkout', express.raw({ type: 'application/json' }), bookingController.webhookCheckout);
+app.post(
+    '/webhook-checkout',
+    express.raw({ type: 'application/json' }),
+    bookingController.webhookCheckout
+);
 
 
 
